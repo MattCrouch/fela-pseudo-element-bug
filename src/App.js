@@ -1,26 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { createRenderer } from "fela";
+import { RendererProvider, createComponent } from "react-fela";
+
+const renderer = createRenderer();
+
+const CustomProgress = createComponent(
+  {
+    "::-moz-progress-bar": {
+      backgroundColor: "red"
+    }
+  },
+  "progress"
+);
+const OtherComponent = createComponent({ fontWeight: "bold" }, "div");
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <RendererProvider renderer={renderer}>
+        <div>
+          <CustomProgress />
+          <OtherComponent>Other Component</OtherComponent>
+        </div>
+      </RendererProvider>
     );
   }
 }
